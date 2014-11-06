@@ -23,7 +23,8 @@ wave normalise(wave const& in_wave, int print) {
             max_val = sample; 
         }
     }
-    if(print == 1) printf("maximum: %f\n", max_val);
+    if(print == 1) printf("peak: %f; %fdB\n", max_val, 20*std::log(max_val));
+
 
     for(int n=0; n<length; n++) {
         out_data[n] = in_wave.data[n]/max_val;
