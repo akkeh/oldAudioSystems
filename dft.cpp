@@ -4,7 +4,7 @@
 #include "audioproc.h"
 #include "ztrans.h"
 
-zt dft(wave in_file, int print) {
+zt dft(wave const& in_file, int print) {
     zt dft_out;
     unsigned long length = in_file.length;
     dft_out.data = new std::complex<double>[length];
