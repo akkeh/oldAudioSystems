@@ -1,2 +1,4 @@
 zandb.cpp
 *.wav
+tests/*
+plotting/

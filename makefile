@@ -4,7 +4,7 @@ CFLAGS = -Wall
 
 DIR=outp
 
-OBJ = zandb.o wavio.o amps.o simple_proc.o
+OBJ = zandb.o wavio.o amps.o simple_proc.o ztrans.o dft.o
 
 all: main
 

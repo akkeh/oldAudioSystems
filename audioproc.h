@@ -3,7 +3,7 @@
 
 struct wave{
     double* data;
-    unsigned int length;
+    unsigned long length;
     unsigned short chn_num;
     unsigned int fs;
 };
