@@ -6,10 +6,10 @@
 /*
 ||  functions to read/write .wav files
 ||      read(const char* filename, int print = 0)
-            read a *.wav file and put data in struct wave file
-            return: struct wave
-||      write(const char* filename, wave const& in_data, unsigned short bps = 16, int print = 0)
-            writes data from struct wave to .wav file
+            read a *.wav file and put data in struct sig file
+            return: struct sig
+||      write(const char* filename, sig const& in_data, unsigned short bps = 16, int print = 0)
+            writes data from struct sig to .wav file
             return: int
 
 ||
@@ -17,7 +17,7 @@
 ||
 */
 
-wave read(const char* filename, int print) {
+struct sig read(const char* filename, int print) {
     int error = -1;
     FILE* infile=fopen(filename, "rb");
     if(!infile) { printf("file %s not found", filename); goto exit; }
@@ -40,7 +40,8 @@ wave read(const char* filename, int print) {
     unsigned int ck3_size;   //(bps/8)*chn_num*samples
     short* in_data;    //N = ck3_size;
     double* data;
-	short bit_depth;
+	double* init_data;
+    short bit_depth;
     int size;
 
     //RIFF
@@ -105,7 +106,12 @@ wave read(const char* filename, int print) {
     if(print == 1) printf("bitdepth: %i", bit_depth);
     in_data = new short[size];
     data = new double[size];
+
     //samples:
+    init_data = new double[size];
+    for(int n=0; n<size; n++) {
+        init_data[n] = 0;
+    }
     for(int n=0; n<size; n++) {
         fread(&in_data[n], sizeof(short), 1, infile);
         data[n] = double(in_data[n])/bit_depth;
@@ -116,16 +122,20 @@ wave read(const char* filename, int print) {
     fclose(infile);
     if(error == 0) {
         if(print == 1) printf("loaded %s, %i samples\n", filename, size);
-        wave output;
-        output.data = data;
+        sig output;
+        output.rdata = data;
+        output.idata = init_data;
         output.length = size;
         output.chn_num = chn_num;
         output.fs = fs;
+        
+        delete[] in_data;
+
         return output;
     }
 }
 
-int write(const char* filename, wave const& in_data, unsigned short bps, int print) {
+int write(const char* filename, sig const& in_data, unsigned short bps, int print) {
     int error = -1;
     FILE* outfile=fopen(filename, "wb");
     if(!outfile) { printf("file %s not found", filename);}
@@ -143,7 +153,7 @@ int write(const char* filename, wave const& in_data, unsigned short bps, int pri
     unsigned short blk_all = (bps/8)*chn_num;  //bps*chn_num
     //data
 	short* out_data = new short[size];    //N = ck3_size;
-    double* f_data = in_data.data;
+    double* f_data = in_data.rdata;
 
 	short bit_depth = (std::pow(2, 16)/2-1);
     //RIFF
