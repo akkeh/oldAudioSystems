@@ -40,6 +40,42 @@ sig dft(sig const& in_sig, int print) {     // now only monophonic!
 */
     return out_sig;
 }
+
+sig idft(sig const& in_sig, int print) {
+    sig out_sig;
+    unsigned long length = in_sig.length;
+    double* rdata = new double[length];
+    double* idata = new double[length];
+    out_sig.length = length;
+
+    out_sig.fs = in_sig.fs;
+    out_sig.chn_num = in_sig.chn_num;
+
+    double rval, ival, a, b, c, d;
+    for(unsigned long int n=0; n<length; n++) {
+        rval = 0;
+        ival = 0;
+        for(unsigned long int k=0; k<length; k++) {
+            // calculate (a+bi) * (c+di):
+            a = in_sig.rdata[k];
+            b = in_sig.idata[k];
+            c = std::cos(2.0*M_PI * (double)k * (double)n / length);
+            d = std::sin(2.0*M_PI * (double)k * (double)n / length);
+            
+            rval+=(a*c-d*b);
+            ival+=(a*d+b*c);
+        }
+        rdata[n] = rval/length;
+        idata[n] = ival/length;
+    }
+
+    out_sig.rdata = rdata;
+    out_sig.idata = idata;
+   
+    return out_sig; 
+}
+
+
 /*
 sig dft_depr(sig const& in_file, int print) {
     sig dft_out;
