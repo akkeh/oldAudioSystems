@@ -6,9 +6,9 @@ DIR=outp
 
 OBJ = zandb.o wavio.o amps.o simple_proc.o ztrans.o dft.o
 
-all: main
+all: test
 
-main: ${OBJ}
+test: ${OBJ}
 	${CC} -o $@ ${CFLAGS} ${OBJ}
 
 .cpp.p:
