@@ -108,10 +108,6 @@ struct sig read(const char* filename, int print) {
     data = new double[size];
 
     //samples:
-    init_data = new double[size];
-    for(int n=0; n<size; n++) {
-        init_data[n] = 0;
-    }
     for(int n=0; n<size; n++) {
         fread(&in_data[n], sizeof(short), 1, infile);
         data[n] = double(in_data[n])/bit_depth;
@@ -124,7 +120,7 @@ struct sig read(const char* filename, int print) {
         if(print == 1) printf("loaded %s, %i samples\n", filename, size);
         sig output;
         output.rdata = data;
-        output.idata = init_data;
+        output.idata = NULL;
         output.length = size;
         output.chn_num = chn_num;
         output.fs = fs;
