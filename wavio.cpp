@@ -103,7 +103,7 @@ struct sig read(const char* filename, int print) {
     else if(print == 1) printf("blk_all == ((bps/8)*chn_num)\n");
 
 	bit_depth = (std::pow(2, 16)/2-1);
-    if(print == 1) printf("bitdepth: %i", bit_depth);
+    if(print == 1) printf("bitdepth: %i\n", bit_depth);
     in_data = new short[size];
     data = new double[size];
 
@@ -117,7 +117,7 @@ struct sig read(const char* filename, int print) {
     exit:
     fclose(infile);
     if(error == 0) {
-        if(print == 1) printf("loaded %s, %i samples\n", filename, size);
+        if(print == 1) printf("\nloaded %s, %i samples\n", filename, size);
         sig output;
         output.rdata = data;
         output.idata = NULL;

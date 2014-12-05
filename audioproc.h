@@ -14,5 +14,5 @@ int write(const char* filename, sig const& in_data, unsigned short bps = 16, int
 
 struct sig normalise(sig const& in_sig, int print = 0);
 
-
+sig convolve(const sig* sig1, const sig* sig2, int print = 0);
 #endif

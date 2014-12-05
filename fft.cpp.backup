@@ -1,0 +1,85 @@
+#include <cmath>
+#include <fstream>
+#include "simpleproc.h"
+#include "audioproc.h"
+#include "ztrans.h"
+
+/*
+sig fft(sig const& in_sig, int print) {
+    // calculate exponents:
+    unsigned long int N = in_sig.length;
+
+    double* rexp = new double[N];
+    double* iexp = new double[N];
+    for(unsigned long int k = 0; k<N; k++) {
+        rexp[k] = std::cos(2.0*M_PI * (double)k * std::pow(2, N/2) / N); 
+        iexp[k] = std::sin(-2.0*M_PI * (double)k * std::pow(2, N/2) / N);
+    }
+
+   double* r_out = new double[N];
+    double* i_out = new double[N];
+    for(unsigned long int k = 0; k<N; k++) {
+        r_out[k] = 0;
+        i_out[k] = 0;
+    }
+    unsigned long int max_depth = std::log10(N)/std::log10(2);
+
+    fft_rec(in_sig.rdata, N, print, r_out, i_out, 0, max_depth, rexp, iexp); 
+
+    sig out_sig;
+    out_sig.length = N;
+    out_sig.fs = in_sig.fs;
+    out_sig.chn_num = 1;
+    out_sig.rdata = r_out;
+    out_sig.idata = i_out;
+    
+    for(unsigned long int k = 0; k<N; k++) {
+        delete rexp[k];
+        delete iexp[k];   
+    }
+    return out_sig; 
+}
+
+sig fft_rec(double* r_in, unsigned long int N, int print, double* r_out, double* i_out, unsigned long int depth, unsigned long int max_depth, double* rexp, double* iexp) {
+    double* real = new double[N];   //  array to be filled by fft or dft
+    double* imag = new double[N];   //  array to be filled by fft or dft
+
+    // calc W[]
+
+    if(depth < max_depth) {
+        //decimate (split even and odd samples)
+         
+    
+    } else {
+        dft_rec(r_in, N, print, r_out, i_out, depth, rexp, iexp);
+    }
+    
+
+}
+*/
+void dft_rec(double* r_in, unsigned long int N, int print, double* real, double* imag, unsigned long int depth, double* rexp, double* iexp) {
+    double* r_w = new double[N];
+    double* i_w = new double[N];
+    for(unsigned long int k=0; k<N; k++) {
+        r_w[k] = std::cos(2.0*M_PI * (double)std::pow(2.0, depth-1) * (double)k / (double)N);
+        i_w[k] = std::sin(-2.0*M_PI * (double)std::pow(2.0, depth-1) * (double)k / (double)N);
+    }
+    for(unsigned long int k=0; k<N; k++) {
+        double r, i;
+        c_mul(r_in[0], 0, rexp[k], iexp[k], &r, &i); //even
+        real[k]+=r;
+        imag[k]+=i;
+
+        c_mul(r_in[1], 0, rexp[k], iexp[k], &r, &i);           //odd
+        c_mul(r, i, r_w[k], i_w[k], &r, &i);                   //twiddle
+        real[k]+=r;
+        imag[k]+=i;
+        //dft of r_in[0] (first 0) and r_in[1] (first 8th)
+    }
+    /*
+    for(unsigned long int k=0; k<N; k++) {
+        delete *(r_w+k);
+        delete *(i_w+k);
+    }
+    */
+}
