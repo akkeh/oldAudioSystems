@@ -1,6 +1,8 @@
 #include <cmath>
 #include <cstdlib>
 
+#include "ztrans.h"
+
 #ifndef AZATH_H_
 #define AZATH_H_
 
