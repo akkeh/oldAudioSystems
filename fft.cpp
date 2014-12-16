@@ -1,8 +1,28 @@
 #include "azath.h"
-#include "ztrans.h"
 #include <iostream>
 
-void dft1d(sig const& x, unsigned long N, sig* &X, unsigned long d, sig* &exp) {
+sig fft1d(sig const& x, unsigned long N, unsigned long d, sig* &exp) {
+    if(x.N < 2) {
+       return dft1d(x, N, d, exp); 
+    } else {
+        sig W;
+        W.re = new double[N];
+        W.im = new double[N];
+        for(unsigned long k=0; k<N; k++) {
+            W.re[k] = std::cos(TWOPI * std::pow(2, d)*(double)k /(double)N);
+            W.im[k] = -std::sin(TWOPI * std::pow(2, d)*(double)k /(double)N);
+        }
+        W.N = N;
+        sig xe = decimate(x, 0);
+        sig xo = decimate(x, 1);
+        return sig_add(fft1d(xe, N, d+1, exp), sig_mul(fft1d(xo, N, d+1, exp), W));
+    }
+}
+
+
+
+
+sig dft1d(sig const& x, unsigned long N, unsigned long d, sig* &exp) {
     
     unsigned long len = x.N;
     if(exp == NULL) {                       //  calculate the complex exponents if not already calculated
@@ -19,28 +39,26 @@ void dft1d(sig const& x, unsigned long N, sig* &X, unsigned long d, sig* &exp) {
         }
         (*exp).N = N;                       //  set length of dimension of k
     }    
-    if(X == NULL) {                     //  initialise output buffer if not already initialised
-        X = new sig;
-        (*X).N = N;
-        (*X).re = new double[N];
-        (*X).im = new double[N];
-        for(unsigned long k=0; k<N; k++) {
-            (*X).re[k] = 0;
-            (*X).im[k] = 0;
-        }
+    sig X;
+    X.N = N;
+    X.re = new double[N];
+    X.im = new double[N];
+    for(unsigned long k=0; k<N; k++) {
+        X.re[k] = 0;
+        X.im[k] = 0;
     }
     std::cout<<"X initialised\n";
     //  perform DFT:
     for(unsigned long k=0; k<N; k++) {
         for(unsigned long n=0; n<len; n++) {
             // ac - bd:
-            (*X).re[k] += (x.re[n] * (*(mdsig*)exp).data[k].re[n]) - (x.im[n] * (*(mdsig*)exp).data[k].im[n]);
+            X.re[k] += (x.re[n] * (*(mdsig*)exp).data[k].re[n]) - (x.im[n] * (*(mdsig*)exp).data[k].im[n]);
             // ad + bc
-            (*X).im[k] += (x.re[n] * (*(mdsig*)exp).data[k].im[n]) - (x.im[n] * (*(mdsig*)exp).data[k].re[n]);
+            X.im[k] += (x.re[n] * (*(mdsig*)exp).data[k].im[n]) - (x.im[n] * (*(mdsig*)exp).data[k].re[n]);
         }
     }
 
-
+    return X;
 }
 
 /*    unsigned long len = x.N;

@@ -4,7 +4,7 @@ CFLAGS = -Wall
 
 DIR=outp
 
-OBJ = main.o fft.o #wavio.o simpleproc.o #amps.o ztrans.o dft.o convolve.o fft.o
+OBJ = main.o fft.o simpleproc.o #wavio.o #amps.o ztrans.o dft.o convolve.o fft.o
 
 all: test
 

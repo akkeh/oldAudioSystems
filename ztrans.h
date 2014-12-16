@@ -2,8 +2,8 @@
 #define ZTRANS_H_
 
 #include "azath.h"
-void dft1d(sig const& x, unsigned long N, sig* &X, unsigned long d, sig* &exp);
-
+sig dft1d(sig const& x, unsigned long N, unsigned long d, sig* &exp);
+sig fft1d(sig const& x, unsigned long N, unsigned long d, sig* &exp);
 
 #endif
 
