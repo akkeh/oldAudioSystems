@@ -25,7 +25,7 @@ sig decimate(sig const& x, int odd) {
 
 sig sig_add(sig const& sig1, sig const& sig2) {
     if(sig1.N != sig2.N) {
-        std::cout<<"lengths incompatible!\n";
+        std::cout<<"sig add: lengths incompatible!\n";
         return sig1;
     }
     sig out;
@@ -41,7 +41,7 @@ sig sig_add(sig const& sig1, sig const& sig2) {
 
 sig sig_mul(sig const& sig1, sig const& sig2) {
     if(sig1.N != sig2.N) {
-        std::cout<<"lengths incompatible!\n";
+        std::cout<<"sig mul: lengths incompatible!\n"<<"\tN1: "<<sig1.N<<"\tN2: "<<sig2.N<<std::endl;
         return sig1;
     }
     sig out;
