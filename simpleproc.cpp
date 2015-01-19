@@ -9,6 +9,17 @@ void c_mul(double a, double b, double c, double d, double* re, double* im) {
     *im = a*d + b*c;
 }
 
+void arrange(sig const& x, sig* buf, unsigned long int id) {
+    std::cout<<"length: "<<x.N<<std::endl;
+    if(x.N > 1) {
+        arrange(decimate(x, 0), buf, id);    
+        arrange(decimate(x, 1), buf, id+x.N/2);
+    } else {
+        (*buf).re[id] = x.re[0];
+        (*buf).im[id] = x.im[0];
+    }
+}
+
 sig decimate(sig const& x, int odd) {
     sig out;
     out.re = new double[x.N/2];

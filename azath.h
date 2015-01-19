@@ -9,11 +9,13 @@ struct sig {
     double* re;
     double* im;
     unsigned long N;
+    virtual ~sig() { delete[] re; delete[] im; };
 };// uni-dimenstional signal
 
 struct mdsig : public sig {
     sig* data;
     unsigned long N;
+//    ~mdsig() { delete[] data; };
 };// multi dimensional signal
 
 sig read(const char* filename, int print = 0);
