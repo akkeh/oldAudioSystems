@@ -1,2 +1,4 @@
 tests/
 main*
+*.backup
+.fuse*
