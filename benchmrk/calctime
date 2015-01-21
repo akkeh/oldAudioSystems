@@ -1,0 +1,28 @@
+#! /bin/bash
+
+if [ $# -lt 2 ]; then
+    echo "usage: [lower power][upper power]"
+    exit
+fi
+
+DW=$1
+UP=$2
+
+DIFF=`echo "${UP}-${DW}" | bc`
+for i in `seq $DIFF`
+do
+    echo "|-----------------------------------------| "
+    echo "length: `echo "2^${POW}" | bc`"
+    POW=`echo "${i}-1+${DW}" | bc`
+    STIME=`./gettime`
+    ../test $POW
+    ETIME=`./gettime`
+    echo "CPP: ms taken: "
+    echo "(${ETIME}-${STIME})/10^6" | bc
+    STIME=`./gettime`
+    python benchfft.py $POW
+    ETIME=`./gettime`
+    echo "PY: ms taken: "
+    echo "(${ETIME}-${STIME})/10^6" | bc
+
+done

@@ -9,8 +9,11 @@ void c_mul(double a, double b, double c, double d, double* re, double* im) {
     *im = a*d + b*c;
 }
 
+double c_abs(double a, double b) {
+    return std::sqrt(a*a + b*b);
+}
+
 void arrange(sig const& x, sig* buf, unsigned long int id) {
-    std::cout<<"length: "<<x.N<<std::endl;
     if(x.N > 1) {
         arrange(decimate(x, 0), buf, id);    
         arrange(decimate(x, 1), buf, id+x.N/2);

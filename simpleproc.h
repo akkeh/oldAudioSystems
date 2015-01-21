@@ -4,6 +4,7 @@
 #include "azath.h"
 //  common procedures:
 void c_mul(double a, double b, double c, double d, double* re, double* im);
+double c_abs(double a, double b);
 
 //  sig procedures:
 void arrange(sig const& x, sig* buf, unsigned long int id);
