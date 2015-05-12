@@ -13,13 +13,19 @@ class Track {
 public:
     int load_so(const char* sofile);
     void* output(unsigned long t);
-
+    Track();
+    ~Track();
 private:
     void* solib;
     Track* input;
-    Event* events;
     unsigned long last_t;
     void* last_output;
+
+    // linked list:
+    event_count;
+    Event* first;   // first event
+    Event* last;    // last event
+    Event* prev;    // previously added event
 
     // methods:
     void* process(unsigned long t);

@@ -47,3 +47,14 @@ void* Track::output(unsigned long t) {
 };  // Track::output();
 
 
+
+Track::Track() {
+    first = last = NULL;
+    event_count = 0;
+};  // Track::Track();
+
+Track::~Track() {
+   
+};  // Track::~Track();
+
+
