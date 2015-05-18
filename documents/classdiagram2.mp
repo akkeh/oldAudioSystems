@@ -1,7 +1,7 @@
 input metauml
 
 beginfig(1);
-    Class.Sced("Sced")(
+    Class.Sced("Scheduler")(
         "add_track(): int",
         "start(): int",
         "stop(): int"
@@ -16,8 +16,8 @@ beginfig(1);
          
         % graphic stuff:
         "+g_query_tracks(): void",
-        "+(...)",
-        "+g_playhead(): void"
+        "+(...)"
+        % "+g_playhead(): void"
     );
 
     Class.Track_H("Track.h")(

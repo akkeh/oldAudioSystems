@@ -1,4 +1,5 @@
 #include "event.h"
+#include <cstdlib>
 
 int Event::add(Event* new_event, bool reversed){
     /*
@@ -27,8 +28,8 @@ unsigned long Event::get_t0() {
     return t0;
 }
     
-void Event::do_func(unsigned long t) {
-   // ??
+inline void Event::do_func(unsigned long t) {
+   
 }
 
 int Event::append(Event* new_event) {
@@ -45,4 +46,10 @@ int Event::prepend(Event* new_event) {
     return 0;
 }
     
+Event::Event(int t_argc, const char** t_argv, unsigned long t_t0, unsigned long t_tT){ 
+    t0 = t_t0; tT = t_tT;
+    next = prev = NULL;
+    argc = t_argc;
+    argv = t_argv;
 
+}

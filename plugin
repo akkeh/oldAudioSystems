@@ -1,0 +1,6 @@
+uitzoeken:
+    dl: kernel-space
+    pluginhost: user-space
+
+keuze:
+    in class Event ook linked list aan sub-Events
