@@ -3,7 +3,8 @@ CC=g++
 CFLAGS = -Wall -ldl
 
 
-OBJ = main.o Event.o Track.o
+OBJ = main.o track.o event.o
+
 all: kronos
 
 kronos: ${OBJ}
@@ -13,7 +14,7 @@ kronos: ${OBJ}
 	${CC} -c $< ${CFlAGS}
 
 
-lib: soLib.cpp
-	${CC} -shared -fPIC -o soLib.so soLib.cpp
+lib: test.cpp
+	${CC} -shared -fPIC -o test.so test.cpp
 clean:
 	rm -rf *.o

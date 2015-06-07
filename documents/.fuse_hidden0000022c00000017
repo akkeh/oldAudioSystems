@@ -1,0 +1,47 @@
+input metauml
+
+beginfig(1);
+	Class.Event("Event")(
+		"process(): void",
+		"wait(): void",
+		"add_event(): int"
+	)(
+		"-track: Track*",
+		"-next, prev: Event*",
+		"-clock: clock_t*",
+		"-prepend(): int",
+		"-append(): int"
+
+	);
+
+	Class.Track("Track")(
+		"process(): virtual void*",
+		"add_event(unsigned long): void",
+		"g_update(): virtual void",
+		"g_draw(): virtual void"
+	)(
+		"-lib: soLib*",
+		"-input: Track*"
+	);
+
+	Class.soTrack("soTrack : Track")(
+		"process(): void*",
+		"g_update(): void",
+		"g_draw(): void"
+	)(
+		"-output_mem: ???",
+		"-states: ??"
+	);
+
+
+	leftToRight(45)(Event, Track)
+	topToBottom(45)(Track, soTrack);
+	drawObjects(Event, Track, soTrack);
+
+	clink(aggregationUni)(Track, soTrack)
+
+	item(iAssoc)("Track* = ")(obj.s =.5[Event.e, Track.w]);
+
+endfig;
+
+end;

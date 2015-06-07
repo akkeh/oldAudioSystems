@@ -1,4 +1,4 @@
-#include "event.h"
+#include "KRNS_event.h"
 #include <cstdlib>
 
 int Event::add(Event* new_event, bool reversed){
@@ -28,10 +28,6 @@ unsigned long Event::get_t0() {
     return t0;
 }
     
-inline void Event::do_func(unsigned long t) {
-   
-}
-
 int Event::append(Event* new_event) {
     new_event->prev = this;
     new_event->next = this->next;
@@ -51,5 +47,7 @@ Event::Event(int t_argc, const char** t_argv, unsigned long t_t0, unsigned long 
     next = prev = NULL;
     argc = t_argc;
     argv = t_argv;
-
 }
+
+Event::~Event() {
+};

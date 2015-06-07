@@ -14,6 +14,6 @@ kronos: ${OBJ}
 
 
 lib: soLib.cpp
-	${CC} -shared -fPIC -o soLib.so soLib.cpp
+	${CC} -shared -fPIC -o soLib.so soLib.cpp Event.cpp Track.cpp
 clean:
 	rm -rf *.o
