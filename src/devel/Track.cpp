@@ -92,9 +92,7 @@ int Track::load() {
 
 Event* Track::new_Event(unsigned long t, int event_id, int argc, void** argv) {
     if(event_id == -1)
-        chooseEvent(&event_id, &argc, argv);
-
-    std::cout << "making event\n";
+        chooseEvent(&event_id, &argc, &argv);
     Event* new_Event = constrList[event_id](t, this, argc, argv);
 
     std::cout << "Event made\n";
@@ -110,7 +108,7 @@ Event* Track::new_Event(unsigned long t, int event_id, int argc, void** argv) {
 };
 
 
-void Track::chooseEvent(int* event_id, int* argc, void** argv) {
+int Track::chooseEvent(int* event_id, int* argc, void*** argv) {
     // list functions:
     std::cout << "Available events:\n";
         std::cout << "\tTrack events:\n";
@@ -125,17 +123,22 @@ void Track::chooseEvent(int* event_id, int* argc, void** argv) {
             counter++;  
         };
         */
-    std::cout << "/nSelect an event:\n\t$ ";
+    std::cout << "\nSelect an event:\n\t$ ";
     std::cin >> *event_id;    
-    if((*event_id < 0) || (*event_id > counter)) {
+    if((*event_id < 0) || (*event_id >= counter)) {
         std::cerr << "error: event not found!\n";
+        return -1;
     };
     *argc = argcList[*event_id];
-    argv = new void*[*argc];
+    std::cout << "argc: " << *argc << std::endl;
+    *argv = new void*[*argc];
     for(int i=0; i<*argc; i++) {
         std::cout << argnList[*event_id][i] << "\n\t$ ";
-        std::cin >> argv[i];
+        int* arg = new int;
+        std::cin >> *arg;
+        *argv[i] = (void*)arg;
     };
+    return 0;
 };
 
 

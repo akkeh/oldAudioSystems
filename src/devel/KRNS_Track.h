@@ -13,7 +13,7 @@ public:
     void output(int argc, void** argv, int outc, void** outv);
 
     Event* new_Event(unsigned long t, int event_id = -1, int argc = 0, void** argv = NULL);
-    void chooseEvent(int* event_id, int* argc, void** argv);
+    int chooseEvent(int* event_id, int* argc, void*** argv);
 
     // so lib stuff:
     int load();    // load libary

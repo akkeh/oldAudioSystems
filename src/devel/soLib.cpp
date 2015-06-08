@@ -19,7 +19,7 @@ private:
 };
 
 int testEventArgc = 1;
-char* testEventArgn[1] = { "test" };
+char* testEventArgn[1] = { "test: int" };
 
 testEvent* constr_testEvent(unsigned long t_t, Track* t_track, int t_argc, void** t_argv, bool isTemp) {
     return new testEvent(t_t, t_track, t_argc, t_argv, isTemp);
@@ -40,6 +40,9 @@ testEvent::testEvent(unsigned long t_t, Track* t_track, int t_argc, void** t_arg
 }; 
 
 void testEvent::process() {
-    std::cout << "so lib says hi!\n x = " << x << "\n argc: " << std::endl;
+    std::cout << "so lib says hi!\n x = " << x << "\n argc: " << argc << std::endl;
+    if(argv) {
+        std::cout << "argv[0]: " << *(int*)argv[0] << std::endl;
+    }; 
 };
 
