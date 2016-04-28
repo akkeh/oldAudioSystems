@@ -1,0 +1,7 @@
+zandb.cpp
+*.wav
+tests/*
+plotting/
+data.txt
+*~
+.fuse*
