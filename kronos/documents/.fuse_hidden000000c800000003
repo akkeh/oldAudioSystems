@@ -1,0 +1,20 @@
+input metauml
+
+beginfig(1);
+    Class.Track("Track<Type>")(
+        "+sofile: void*", % so file handler
+        "+Inputs: Track*"
+        "+last_t: unsigned long",
+        "+eventlist: Event*",
+        "last_out: Type"
+        
+    )(   
+        "output(): Type",
+        "add_event(): void",
+        "msg(): void",
+        "spawn(): void"
+    );
+    
+    drawObjects(Track);
+endfig;
+end

@@ -1,0 +1,28 @@
+input metauml
+
+beginfig(1);
+	Class.Event("Event")(
+		"process(): void",
+		"wait(): void"
+	)(
+		"-track: Track*",
+		"-next, prev: Event*",
+		"-clock: clock_t*"
+	);
+
+	Class.Track("Track")(
+		"process(): virtual void*",
+		"g_update(): virtual void",
+		"g_draw(): virtual void"
+	)(
+		"-lib: soLib*"
+		"-inputs: Track*"
+	);
+
+
+	topToBottom(45)(Event, Track);
+	drawObjects(Event, Track);
+
+endfig;
+
+end;
